@@ -3,32 +3,53 @@
 const fs = require('fs');
 const path = require('path');
 
-// Read the app's package.json
-const appPackagePath = path.join(__dirname, 'packages/app/package.json');
-const appPackage = JSON.parse(fs.readFileSync(appPackagePath, 'utf8'));
-
-// Replace workspace dependencies with file paths
-const workspaceDeps = [
-  '@aitube/client',
-  '@aitube/broadway', 
-  '@aitube/clap',
-  '@aitube/clapper-services',
-  '@aitube/engine',
-  '@aitube/timeline'
+// Define all packages and their dependencies
+const packages = [
+  'app', 'broadway', 'clap', 'clapper-services', 
+  'client', 'colors', 'engine', 'io', 'timeline'
 ];
 
-// Replace workspace:* with file: paths
-workspaceDeps.forEach(dep => {
-  if (appPackage.dependencies[dep]) {
-    const packageName = dep.split('/')[1]; // Get the package name after @aitube/
-    appPackage.dependencies[dep] = `file:../${packageName}`;
+console.log('🔧 Fixing workspace dependencies for Vercel deployment...');
+
+packages.forEach(pkg => {
+  const packagePath = path.join(__dirname, `packages/${pkg}/package.json`);
+  
+  if (!fs.existsSync(packagePath)) {
+    console.log(`⚠️  Skipping ${pkg} - package.json not found`);
+    return;
+  }
+  
+  const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+  let hasChanges = false;
+
+  // Fix workspace dependencies in dependencies
+  if (packageJson.dependencies) {
+    Object.keys(packageJson.dependencies).forEach(dep => {
+      if (dep.startsWith('@aitube/') && packageJson.dependencies[dep] === 'workspace:*') {
+        const depName = dep.replace('@aitube/', '');
+        packageJson.dependencies[dep] = `file:../${depName}`;
+        hasChanges = true;
+      }
+    });
+  }
+
+  // Fix workspace dependencies in devDependencies
+  if (packageJson.devDependencies) {
+    Object.keys(packageJson.devDependencies).forEach(dep => {
+      if (dep.startsWith('@aitube/') && packageJson.devDependencies[dep] === 'workspace:*') {
+        const depName = dep.replace('@aitube/', '');
+        packageJson.devDependencies[dep] = `file:../${depName}`;
+        hasChanges = true;
+      }
+    });
+  }
+
+  if (hasChanges) {
+    fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
+    console.log(`✅ Updated ${pkg}/package.json`);
+  } else {
+    console.log(`ℹ️  No changes needed for ${pkg}`);
   }
 });
 
-// Write the updated package.json
-fs.writeFileSync(appPackagePath, JSON.stringify(appPackage, null, 2));
-console.log('✅ Updated package.json with file: dependencies');
-
-// Also create a backup
-fs.writeFileSync(appPackagePath + '.backup', JSON.stringify(appPackage, null, 2));
-console.log('✅ Created backup at packages/app/package.json.backup');
+console.log('🎉 All workspace dependencies have been converted to file: paths!');

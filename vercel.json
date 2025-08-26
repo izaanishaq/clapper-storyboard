@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm install",
+  "installCommand": "npm install --workspaces=false --legacy-peer-deps",
   "buildCommand": "npm run build:all",
   "outputDirectory": "packages/app/.next",
   "framework": "nextjs"

@@ -1,0 +1,12 @@
+{
+  "name": "clapper-deployment",
+  "version": "1.0.0", 
+  "private": true,
+  "scripts": {
+    "build": "cd packages/app && npm install && npm run build",
+    "start": "cd packages/app && npm start"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
