@@ -2,8 +2,8 @@
 const nextConfig = {
   output: 'standalone',
   
-  // Add basePath and assetPrefix for proper routing
-  assetPrefix: '',
+  // Configure for proper static file serving
+  trailingSlash: false,
   
   experimental: {
     serverActions: {
@@ -12,10 +12,16 @@ const nextConfig = {
     }
   },
   images: {
-    // Enable image optimization and add domain configuration
+    // Keep images unoptimized for compatibility
     unoptimized: true,
-    domains: ['localhost'],
     formats: ['image/webp', 'image/avif'],
+    // Remove domains restriction for broader compatibility
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
   // workaround for transformers.js issues
   webpack: (config) => {
