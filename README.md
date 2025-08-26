@@ -15,6 +15,10 @@ short_description: 🎬 Clapper
 > Clapper is in a **_very_** early stage. There are no tutorials, some UI features and buttons won't work, some workflows are broken, and there are no tests.
 > Want this to change? Come join our open-source community to help build Clapper!
 
+## Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/izaanishaq/clapper-storyboard&project-name=clapper-storyboard&repository-name=clapper-storyboard)
+
 ![Demo|600](documentation/videos/20240826.gif)
 
 # Funding
