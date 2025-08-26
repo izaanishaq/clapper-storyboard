@@ -13,13 +13,13 @@
     "public:": "./public"
   },
   "scripts": {
-    "dev": "bun run checks && next dev",
+    "dev": "npm run checks && next dev",
     "build": "npm run prepare && npm run checks && rm -Rf out && next build && npm run build:copyassets",
     "build:copyassets": "cp -R public .next/standalone/packages/app/public && cp -R .next/static .next/standalone/packages/app/.next/static",
     "prepare": "cp -R ../../node_modules/mediainfo.js/dist/MediaInfoModule.wasm public/wasm/",
     "start": "next start",
-    "start:prod": "bun .next/standalone/packages/app/server.js",
-    "checks": "bun run format:fix && bun run lint",
+    "start:prod": "node .next/standalone/packages/app/server.js",
+    "checks": "npm run format:fix && npm run lint",
     "format": "prettier --check --ignore-path .gitignore ./src/",
     "format:fix": "prettier --write --ignore-path .gitignore ./src/",
     "lint": "next lint",
