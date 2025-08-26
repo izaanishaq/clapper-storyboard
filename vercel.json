@@ -1,0 +1,17 @@
+{
+  "buildCommand": "cd packages/app && npm install && npm run build",
+  "outputDirectory": "packages/app/.next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "functions": {
+    "packages/app/src/pages/api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/packages/app/$1"
+    }
+  ]
+}
