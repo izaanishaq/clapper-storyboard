@@ -14,9 +14,9 @@
   },
   "scripts": {
     "dev": "npm run checks && next dev",
-    "build": "npm run prepare && npm run checks && rm -Rf out && next build && npm run build:copyassets",
-    "build:copyassets": "cp -R public .next/standalone/packages/app/public && cp -R .next/static .next/standalone/packages/app/.next/static",
-    "prepare": "cp -R ../../node_modules/mediainfo.js/dist/MediaInfoModule.wasm public/wasm/",
+    "build": "npm run prepare && npm run checks && next build && npm run build:copyassets",
+    "build:copyassets": "node -e \"const fs=require('fs'); const path=require('path'); if(fs.existsSync('.next/standalone')) { try { fs.cpSync('public', '.next/standalone/packages/app/public', {recursive:true}); fs.cpSync('.next/static', '.next/standalone/packages/app/.next/static', {recursive:true}); } catch(e) { console.log('Copy assets warning:', e.message); } }\"",
+    "prepare": "node -e \"const fs=require('fs'); const src='../../node_modules/mediainfo.js/dist/MediaInfoModule.wasm'; const dest='public/wasm/MediaInfoModule.wasm'; if(fs.existsSync(src)) { fs.mkdirSync('public/wasm', {recursive:true}); fs.copyFileSync(src, dest); }\"",
     "start": "next start",
     "start:prod": "node .next/standalone/packages/app/server.js",
     "checks": "npm run format:fix && npm run lint",

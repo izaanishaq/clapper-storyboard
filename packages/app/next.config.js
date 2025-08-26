@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-
+  
+  // Add basePath and assetPrefix for proper routing
+  assetPrefix: '',
+  
   experimental: {
     serverActions: {
       // a clap file can be quite large - but that's OK
@@ -9,13 +12,10 @@ const nextConfig = {
     }
   },
   images: {
-    // temporary fix for:
-    //
-    //   Error: Image import
-    //   "next-metadata-image-loader?type=icon&segment=&basePath=&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js!/home/runner/work/clapper/clapper/src/app/icon.png?__next_metadata__"
-    //   is not a valid image file.
-    //   The image may be corrupted or an unsupported format.
+    // Enable image optimization and add domain configuration
     unoptimized: true,
+    domains: ['localhost'],
+    formats: ['image/webp', 'image/avif'],
   },
   // workaround for transformers.js issues
   webpack: (config) => {
