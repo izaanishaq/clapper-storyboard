@@ -3,34 +3,29 @@
   "version": "0.2.4",
   "description": "A monorepo for the Clapper project. Individual packages are in the packages directory.",
   "engines": {
-    "bun": ">=1.0.0"
+    "node": ">=18.0.0"
   },
-  "packageManager": "bun@1.0.25",
+  "packageManager": "npm@9.0.0",
   "private": true,
   "scripts": {
-    "dev": "bun run --cwd packages/app dev",
-    "start": "bun run --cwd packages/app start",
-    "start:prod": "bun run --cwd packages/app start:prod",
-    "build": "bun run build:all",
-    "build:all": "bun run build:clap && bun run build:timeline && bun run build:client && bun run build:io && bun run build:colors && bun run build:engine && bun run build:broadway && bun run build:clapper-services && bun run build:app",
-    "build:clap": "bun run --cwd packages/clap build",
-    "build:timeline": "bun run --cwd packages/timeline build",
-    "build:client": "bun run --cwd packages/client build",
-    "build:io": "bun run --cwd packages/io build",
-    "build:colors": "bun run --cwd packages/colors build",
-    "build:engine": "bun run --cwd packages/engine build",
-    "build:broadway": "bun run --cwd packages/broadway build",
-    "build:clapper-services": "bun run --cwd packages/clapper-services build",
-    "build:app": "bun run --cwd packages/app build",
-    "test": "bun run test:all",
-    "test:all": "bun run --cwd packages/clap test && bun run --cwd packages/timeline test && bun run --cwd packages/client test && bun run --cwd packages/io test && bun run --cwd packages/colors test && bun run --cwd packages/engine test && bun run --cwd packages/broadway test && bun run --cwd packages/clapper-services test && bun run --cwd packages/app test",
-    "format": "bun run --cwd packages/app format"
+    "dev": "cd packages/app && npm run dev",
+    "start": "cd packages/app && npm run start",
+    "start:prod": "cd packages/app && npm run start:prod",
+    "build": "npm run build:all",
+    "build:all": "npm run build:clap && npm run build:timeline && npm run build:client && npm run build:io && npm run build:colors && npm run build:engine && npm run build:broadway && npm run build:clapper-services && npm run build:app",
+    "build:clap": "cd packages/clap && npm run build",
+    "build:timeline": "cd packages/timeline && npm run build",
+    "build:client": "cd packages/client && npm run build",
+    "build:io": "cd packages/io && npm run build",
+    "build:colors": "cd packages/colors && npm run build",
+    "build:engine": "cd packages/engine && npm run build",
+    "build:broadway": "cd packages/broadway && npm run build",
+    "build:clapper-services": "cd packages/clapper-services && npm run build",
+    "build:app": "cd packages/app && npm run build",
+    "test": "npm run test:all",
+    "test:all": "cd packages/clap && npm test && cd ../timeline && npm test && cd ../client && npm test && cd ../io && npm test && cd ../colors && npm test && cd ../engine && npm test && cd ../broadway && npm test && cd ../clapper-services && npm test && cd ../app && npm test",
+    "format": "cd packages/app && npm run format"
   },
-  "trustedDependencies": [
-    "@aitube/clapper",
-    "onnxruntime-node",
-    "protobufjs"
-  ],
   "workspaces": [
     "packages/clap",
     "packages/timeline",
